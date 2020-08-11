@@ -1,0 +1,10 @@
+AREA_Name:
+  wave_1-2:
+    mob-amount: 10-10
+    mm-mob:
+      - "mob-name:chance"
+      - "mob-name:chance"
+    must-spawn:
+      - "mob-name:number"
+    
+  

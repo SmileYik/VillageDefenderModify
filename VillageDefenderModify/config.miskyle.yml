@@ -1,0 +1,20 @@
+gold:
+  - "MobNane:1"
+  
+mysql:
+  host: localhost
+  port: 3306
+  database: database
+  username: root
+  password: 123456
+  
+bind-lore: "禁止丢弃"
+dog-lore: "生成狗狗"
+iron-man-lore: "生成铁傀儡"
+place-door: "右键放置门"
+place-fence: "右键放置栅栏"
+
+message:
+ add-gold: "账户余额变动: {0}"
+ no-enough-gold: "这个需要 {0},而你只有{1}"
+ can-not-drop: "这个物品不能丢弃."
