@@ -7,4 +7,17 @@ AREA_Name:
     must-spawn:
       - "mob-name:number"
     
+id: ID
+final-wave: 999
+wave-list:
+  - "1-2"
   
+waves:
+  1-2:
+    mob-amount: 10-10
+    mm-mob:
+      - "mob-name:chance"
+      - "mob-name:chance"
+    must-spawn:
+      - "mob-name:number"
+    coin: 100

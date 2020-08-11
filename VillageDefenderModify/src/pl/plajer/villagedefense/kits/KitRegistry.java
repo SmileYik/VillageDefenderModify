@@ -27,7 +27,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import pl.plajer.villagedefense.Main;
-import pl.plajer.villagedefense.kits.basekits.FreeKit;
 import pl.plajer.villagedefense.kits.basekits.Kit;
 import pl.plajer.villagedefense.kits.free.KnightKit;
 import pl.plajer.villagedefense.kits.free.LightTankKit;
@@ -53,14 +52,15 @@ import pl.plajer.villagedefense.kits.premium.ShotBowKit;
 import pl.plajer.villagedefense.kits.premium.TeleporterKit;
 import pl.plajer.villagedefense.kits.premium.TornadoKit;
 import pl.plajer.villagedefense.kits.premium.WizardKit;
-import pl.plajer.villagedefense.utils.constants.Constants;
 import pl.plajer.villagedefense.plajerlair.commonsbox.minecraft.configuration.ConfigUtils;
+import pl.plajer.villagedefense.utils.constants.Constants;
 
 /**
  * Kit registry class for registering new kits.
  *
  * @author TomTheDeveloper
  */
+@SuppressWarnings("rawtypes")
 public class KitRegistry {
 
   private static List<Kit> kits = new ArrayList<>();

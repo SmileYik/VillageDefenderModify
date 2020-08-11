@@ -49,12 +49,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import miskyle.villagedefender.Utils;
 import miskyle.villagedefender.VillageDefender;
 import miskyle.villagedefender.data.ConfigManager;
 import miskyle.villagedefender.data.LoreString;
 import miskyle.villagedefender.data.player.PlayerData;
 import miskyle.villagedefender.data.player.PlayerManager;
+import miskyle.villagedefender.utils.Utils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import pl.plajer.villagedefense.ConfigPreferences;

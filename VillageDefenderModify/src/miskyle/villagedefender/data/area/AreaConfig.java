@@ -3,11 +3,12 @@ package miskyle.villagedefender.data.area;
 import java.util.HashMap;
 import java.util.Map;
 
-import miskyle.villagedefender.SimpleEntry;
+import miskyle.villagedefender.utils.SimpleEntry;
 
 public class AreaConfig {
   private HashMap<SimpleEntry<Integer, Integer>, WaveConfig> waves;
   private boolean mustSpawn = false;
+  private int finalWave;
 
   public AreaConfig(HashMap<SimpleEntry<Integer, Integer>, WaveConfig> waves) {
     super();
@@ -42,4 +43,13 @@ public class AreaConfig {
   public boolean isMustSpawn() {
     return mustSpawn;
   }
+
+  public int getFinalWave() {
+    return finalWave;
+  }
+
+  public void setFinalWave(int finalWave) {
+    this.finalWave = finalWave;
+  }
+  
 }

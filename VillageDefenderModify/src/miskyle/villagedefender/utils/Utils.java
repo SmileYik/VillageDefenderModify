@@ -1,4 +1,4 @@
-package miskyle.villagedefender;
+package miskyle.villagedefender.utils;
 
 import org.bukkit.ChatColor;
 

@@ -4,7 +4,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import miskyle.villagedefender.command.kitcreator.KitCreator;
-import miskyle.villagedefender.data.kit.DIYKitManager;
+import miskyle.villagedefender.data.DIYKitManager;
 
 public class KitCreatorCMD {
   @Cmd(subCmd = {"start"},

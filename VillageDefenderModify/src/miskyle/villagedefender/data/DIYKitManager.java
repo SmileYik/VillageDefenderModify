@@ -1,4 +1,4 @@
-package miskyle.villagedefender.data.kit;
+package miskyle.villagedefender.data;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +15,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 import miskyle.villagedefender.VillageDefender;
+import miskyle.villagedefender.data.kit.DIYKit;
+import miskyle.villagedefender.data.kit.KitListener;
 import pl.plajer.villagedefense.Main;
 import pl.plajer.villagedefense.kits.KitRegistry;
 import pl.plajer.villagedefense.kits.basekits.Kit;

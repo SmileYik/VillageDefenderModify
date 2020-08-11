@@ -1,4 +1,4 @@
-package miskyle.villagedefender;
+package miskyle.villagedefender.utils;
 
 public class SimpleEntry <R,S>{
 	private R left;

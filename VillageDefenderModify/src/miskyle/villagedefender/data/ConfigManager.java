@@ -10,7 +10,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.github.miskyle.mcpt.mysql.MySQLManager;
 
-import miskyle.villagedefender.data.kit.DIYKitManager;
 import pl.plajer.villagedefense.Main;
 
 public class ConfigManager {

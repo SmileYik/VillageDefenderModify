@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import miskyle.villagedefender.SimpleEntry;
+import miskyle.villagedefender.utils.SimpleEntry;
 
 public class WaveConfig {
   private SimpleEntry<Integer, Integer> mobAmount;

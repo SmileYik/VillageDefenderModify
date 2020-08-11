@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import miskyle.villagedefender.VillageDefender;
+import miskyle.villagedefender.data.DIYKitManager;
 import miskyle.villagedefender.data.LoreString;
 import pl.plajer.villagedefense.arena.Arena;
 import pl.plajer.villagedefense.arena.ArenaRegistry;

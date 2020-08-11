@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.Properties;
 
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -15,16 +14,15 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper;
 import miskyle.villagedefender.command.CommandManager;
+import miskyle.villagedefender.data.ArenaConfig;
 import miskyle.villagedefender.data.ConfigManager;
 import miskyle.villagedefender.data.area.AreaConfig;
-import miskyle.villagedefender.data.area.WaveConfig;
 import miskyle.villagedefender.data.player.PlayerManager;
 import pl.plajer.villagedefense.Main;
 public class VillageDefender {
   private static VillageDefender vd;
   
   private Main plugin;
-  private HashMap<String, AreaConfig> areas;
   private BukkitAPIHelper mmApi;
   
   public VillageDefender(Main plugin) {
@@ -36,7 +34,6 @@ public class VillageDefender {
     new ConfigManager(plugin);
     new PlayerManager(plugin);
     new CommandManager(plugin);
-    loadAreaConfig();
     
     mmApi = ((MythicMobs)plugin.getServer().getPluginManager().getPlugin("MythicMobs")).getAPIHelper();
     
@@ -71,56 +68,56 @@ public class VillageDefender {
   }
   
   
-  private void loadAreaConfig() {
-    areas = new HashMap<>();
-    File file = new File(plugin.getDataFolder(),"area-setting.yml");
-    if (!file.exists()) {
-      try {
-        file.createNewFile();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-      return;
-    }
-    YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-    HashMap<SimpleEntry<Integer, Integer>, WaveConfig> waves = new HashMap<>();
-    SimpleEntry<String, String> nowAreaId = new SimpleEntry<String, String>(null, null);
-    config.getKeys(true).forEach(s->{
-      if (s.replace(".", "@").split("@").length<3) {
-        return;
-      }
-      String areaId = s.replace(".", "@").split("@")[0];
-      String wave = s.split("wave_")[1].replace(".", "@").split("@")[0];
-      String key = areaId+".wave_"+wave;
-      if (nowAreaId.getLeft() == null) {
-        nowAreaId.setLeft(areaId);
-      } else if (!nowAreaId.getLeft().equalsIgnoreCase(areaId)) {
-        HashMap<SimpleEntry<Integer, Integer>, WaveConfig> temp = new HashMap<>();
-        temp.putAll(waves);
-        areas.put(nowAreaId.getLeft(), new AreaConfig(temp));
-        waves.clear();
-      }
-      String[] waveTemp = wave.split("-");
-      String[] mobAmountTemp = config.getString(key+".mob-amount").split("-");
-      SimpleEntry<Integer, Integer> mobAmount = new SimpleEntry<>(Integer.parseInt(mobAmountTemp[0]), Integer.parseInt(mobAmountTemp[1]));
-      HashMap<String, Double> spawnChance = new HashMap<>();
-      config.getStringList(key+".mm-mob").forEach( line -> {
-        String[] temp = line.split(":");
-        spawnChance.put(temp[0], Double.parseDouble(temp[1]));
-      });
-      HashMap<String, Integer> mustSpawn = new HashMap<>();
-      config.getStringList(key+".must-spawn").forEach( line -> {
-        String[] temp = line.split(":");
-        mustSpawn.put(temp[0], Integer.parseInt(temp[1]));
-      });
-      WaveConfig waveConfig = new WaveConfig(mobAmount, spawnChance, mustSpawn, config.getInt(key+".coin",0));
-      waves.put(new SimpleEntry<Integer, Integer>(Integer.parseInt(waveTemp[0]), Integer.parseInt(waveTemp[1])), waveConfig);
-    });
-    areas.put(nowAreaId.getLeft(), new AreaConfig(waves));
-  }
+//  private void loadAreaConfig() {
+//    areas = new HashMap<>();
+//    File file = new File(plugin.getDataFolder(),"area-setting.yml");
+//    if (!file.exists()) {
+//      try {
+//        file.createNewFile();
+//      } catch (IOException e) {
+//        e.printStackTrace();
+//      }
+//      return;
+//    }
+//    YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+//    HashMap<SimpleEntry<Integer, Integer>, WaveConfig> waves = new HashMap<>();
+//    SimpleEntry<String, String> nowAreaId = new SimpleEntry<String, String>(null, null);
+//    config.getKeys(true).forEach(s->{
+//      if (s.replace(".", "@").split("@").length<3) {
+//        return;
+//      }
+//      String areaId = s.replace(".", "@").split("@")[0];
+//      String wave = s.split("wave_")[1].replace(".", "@").split("@")[0];
+//      String key = areaId+".wave_"+wave;
+//      if (nowAreaId.getLeft() == null) {
+//        nowAreaId.setLeft(areaId);
+//      } else if (!nowAreaId.getLeft().equalsIgnoreCase(areaId)) {
+//        HashMap<SimpleEntry<Integer, Integer>, WaveConfig> temp = new HashMap<>();
+//        temp.putAll(waves);
+//        areas.put(nowAreaId.getLeft(), new AreaConfig(temp));
+//        waves.clear();
+//      }
+//      String[] waveTemp = wave.split("-");
+//      String[] mobAmountTemp = config.getString(key+".mob-amount").split("-");
+//      SimpleEntry<Integer, Integer> mobAmount = new SimpleEntry<>(Integer.parseInt(mobAmountTemp[0]), Integer.parseInt(mobAmountTemp[1]));
+//      HashMap<String, Double> spawnChance = new HashMap<>();
+//      config.getStringList(key+".mm-mob").forEach( line -> {
+//        String[] temp = line.split(":");
+//        spawnChance.put(temp[0], Double.parseDouble(temp[1]));
+//      });
+//      HashMap<String, Integer> mustSpawn = new HashMap<>();
+//      config.getStringList(key+".must-spawn").forEach( line -> {
+//        String[] temp = line.split(":");
+//        mustSpawn.put(temp[0], Integer.parseInt(temp[1]));
+//      });
+//      WaveConfig waveConfig = new WaveConfig(mobAmount, spawnChance, mustSpawn, config.getInt(key+".coin",0));
+//      waves.put(new SimpleEntry<Integer, Integer>(Integer.parseInt(waveTemp[0]), Integer.parseInt(waveTemp[1])), waveConfig);
+//    });
+//    areas.put(nowAreaId.getLeft(), new AreaConfig(waves));
+//  }
   
   public static AreaConfig getArea(String id) {
-    return vd.areas.get(id);
+    return ArenaConfig.getArea(id);
   }
   
   public static Main getPlugin() {
