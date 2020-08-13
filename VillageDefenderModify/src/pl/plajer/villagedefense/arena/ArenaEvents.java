@@ -77,6 +77,8 @@ public class ArenaEvents implements Listener {
 
   private final Main plugin;
 
+  private static ArrayList<Integer> ironManKillZombie = new ArrayList<>();
+  
   public ArenaEvents(Main plugin) {
     this.plugin = plugin;
     plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -107,6 +109,20 @@ public class ArenaEvents implements Listener {
   @EventHandler
   public void onDieEntity(EntityDamageByEntityEvent e) {
     if (!(e.getEntity() instanceof LivingEntity && e.getDamager() instanceof Wolf && e.getEntity() instanceof Zombie)) {
+      
+      // *** miSkYle ***
+      if (e.getDamager() instanceof IronGolem && e.getEntity() instanceof Zombie) {
+        for (Arena arena : ArenaRegistry.getArenas()) {
+          if (arena.getIronGolems().contains(e.getDamager())) {
+            if (e.getDamage() >= ((LivingEntity) e.getEntity()).getHealth()) {
+              ironManKillZombie.add(e.getEntity().getEntityId());
+            }
+            break;
+          }
+        }
+      }
+      // *** miSkYle ***
+      
       return;
     }
     //trick to get non player killer of zombie
@@ -166,6 +182,14 @@ public class ArenaEvents implements Listener {
           if (!arena.getZombies().contains(e.getEntity())) {
             continue;
           }
+          // *** miSkYle ***
+          //铁傀儡杀僵尸不掉经验/不给钱
+          if (ironManKillZombie.contains(e.getEntity().getEntityId())) {
+            ironManKillZombie.remove((Integer)e.getEntity().getEntityId());
+            e.setDroppedExp(0);
+            e.getDrops().clear();
+            return;
+          }
           if (VillageDefender.getMMApi().isMythicMob(e.getEntity())) {
             double gold = ConfigManager.getLootGold(VillageDefender.getMMApi().getMythicMobInstance(e.getEntity()).getMobType());
             if (gold > 0) {
@@ -175,6 +199,7 @@ public class ArenaEvents implements Listener {
               });
             }
           }
+          // *** miSkYle ***
           arena.removeZombie((Zombie) e.getEntity());
           arena.addOptionValue(ArenaOption.TOTAL_KILLED_ZOMBIES, 1);
           if (ArenaRegistry.getArena(e.getEntity().getKiller()) != null) {

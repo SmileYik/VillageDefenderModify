@@ -8,6 +8,7 @@ import miskyle.villagedefender.utils.SimpleEntry;
 public class AreaConfig {
   private HashMap<SimpleEntry<Integer, Integer>, WaveConfig> waves;
   private boolean mustSpawn = false;
+  private boolean joinMidway = false;
   private int finalWave;
 
   public AreaConfig(HashMap<SimpleEntry<Integer, Integer>, WaveConfig> waves) {
@@ -50,6 +51,14 @@ public class AreaConfig {
 
   public void setFinalWave(int finalWave) {
     this.finalWave = finalWave;
+  }
+
+  public boolean isJoinMidway() {
+    return joinMidway;
+  }
+
+  public void setJoinMidway(boolean joinMidway) {
+    this.joinMidway = joinMidway;
   }
   
 }

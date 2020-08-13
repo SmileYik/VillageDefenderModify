@@ -34,10 +34,10 @@ public class VillageDefender {
     new ConfigManager(plugin);
     new PlayerManager(plugin);
     new CommandManager(plugin);
-    
+    new ArenaConfig();
     mmApi = ((MythicMobs)plugin.getServer().getPluginManager().getPlugin("MythicMobs")).getAPIHelper();
     
-    plugin.getLogger().info("[miSkYle] = > VillageDefender修改 已成功注入!");
+    plugin.getLogger().info("[miSkYle] => VillageDefender修改 已成功注入!");
     
     change();
   }

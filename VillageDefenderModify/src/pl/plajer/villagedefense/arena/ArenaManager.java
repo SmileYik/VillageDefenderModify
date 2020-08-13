@@ -32,6 +32,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import miskyle.villagedefender.VillageDefender;
+import miskyle.villagedefender.cleaner.MobCleaner;
 import miskyle.villagedefender.data.area.AreaConfig;
 import miskyle.villagedefender.data.area.WaveConfig;
 import miskyle.villagedefender.data.player.PlayerData;
@@ -130,6 +131,15 @@ public class ArenaManager {
     User user = plugin.getUserManager().getUser(player);
     arena.getScoreboardManager().createScoreboard(user);
     if ((arena.getArenaState() == ArenaState.IN_GAME || (arena.getArenaState() == ArenaState.STARTING && arena.getTimer() <= 3) || arena.getArenaState() == ArenaState.ENDING)) {
+      //*** miSkYle ***
+      AreaConfig area = VillageDefender.getArea(arena.getId());
+      if (area != null && !area.isJoinMidway()) {
+        player.sendMessage("§c§l不, 这张地图设定为不可中途加入, 你现在不能进去, 得等里面的人出来后才能进去.");
+        arena.getPlayers().remove(player);
+        arena.getScoreboardManager().removeScoreboard(user);
+        return;
+      }
+      //*** miSkYle ***
       if (!plugin.getConfigPreferences().getOption(ConfigPreferences.Option.INGAME_JOIN_RESPAWN)){
         user.setPermanentSpectator(true);
       }
@@ -393,6 +403,9 @@ public class ArenaManager {
       stopGame(false, arena);
       return;
     }
+    // *** miSkYle ***
+    MobCleaner.clear();
+    // *** miSkYle ***
     plugin.getRewardsHandler().performReward(arena, Reward.RewardType.END_WAVE);
     arena.setTimer(plugin.getConfig().getInt("Cooldown-Before-Next-Wave", 25));
     arena.getZombieSpawnManager().getZombieCheckerLocations().clear();

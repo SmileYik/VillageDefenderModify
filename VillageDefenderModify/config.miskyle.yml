@@ -1,5 +1,8 @@
 gold:
   - "MobNane:1"
+
+clean-list:
+  - "MobName"
   
 mysql:
   host: localhost

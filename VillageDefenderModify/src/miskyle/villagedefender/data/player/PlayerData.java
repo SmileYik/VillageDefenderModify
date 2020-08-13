@@ -68,7 +68,7 @@ public class PlayerData {
   
   public void modifyInGameGold(double value) {
     inGameGold += value;
-    Bukkit.getServer().getPlayer(name).sendMessage(ConfigManager.getMsg(ConfigManager.ADD_GOLD_MESSAGE, _2f(value), _2f(inGameGold)));
+    //Bukkit.getServer().getPlayer(name).sendMessage(ConfigManager.getMsg(ConfigManager.ADD_GOLD_MESSAGE, _2f(value), _2f(inGameGold)));
   }
   
   public void gameOver() {
@@ -96,6 +96,8 @@ public class PlayerData {
     } else {
       p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
     }
+    
+    changeTarget(p);
   }
   
   public void respawn(Player p) {
@@ -155,6 +157,15 @@ public class PlayerData {
       e.printStackTrace();
     }
     MySQLManager.disconnect();
+  }
+  
+  private void changeTarget(Player p) {
+    p.getNearbyEntities(3, 3, 3).forEach(e -> {
+      if (!VillageDefender.getMMApi().isMythicMob(e)) {
+        return;
+      }
+      VillageDefender.getMMApi().getMythicMobInstance(e).resetTarget();
+    });
   }
   
 }

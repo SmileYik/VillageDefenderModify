@@ -3,12 +3,12 @@ package miskyle.villagedefender.data;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -72,7 +72,9 @@ public class DIYKitManager {
     });
     
     if (config.getBoolean("unload-default-kits")) {
-      unloadDefaultKit();
+      Bukkit.getScheduler().runTaskLaterAsynchronously(VillageDefender.getPlugin(), () -> {
+        unloadDefaultKit();        
+      }, 100L);
       if (listener != null) {
         HandlerList.unregisterAll(listener);
       }
@@ -89,7 +91,7 @@ public class DIYKitManager {
     while (iterator.hasNext()) {
       Kit kit = iterator.next();
       if (defaultKit.isEmpty() && kit instanceof KnightKit) {
-        return;
+        continue;
       }
       if (!(kit instanceof DIYKit)) {
         if (kit instanceof Listener) {
@@ -99,6 +101,7 @@ public class DIYKitManager {
         KitRegistry.getKits().remove(kit);
       }
     }
+    VillageDefender.getPlugin().getLogger().info("[miSkYle] => 原版Kit已卸载.");
   }
   
   private static void setDefualtConfig(File file) {
@@ -177,7 +180,9 @@ public class DIYKitManager {
         if (reStockItems.containsKey(wave)) {
           reStockItems.get(wave).add(item);
         } else {
-          reStockItems.put(wave, Arrays.asList(item));
+          ArrayList<ItemStack> itemsList = new ArrayList<>();
+          itemsList.add(item);
+          reStockItems.put(wave, itemsList);
         }
       }
 

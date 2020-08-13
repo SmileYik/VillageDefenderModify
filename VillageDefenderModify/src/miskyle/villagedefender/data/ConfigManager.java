@@ -10,6 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.github.miskyle.mcpt.mysql.MySQLManager;
 
+import miskyle.villagedefender.cleaner.MobCleaner;
 import pl.plajer.villagedefense.Main;
 
 public class ConfigManager {
@@ -31,6 +32,7 @@ public class ConfigManager {
     setupMySQL();
     loadLootGold();
     DIYKitManager.init(plugin);
+    new MobCleaner(plugin, config.getStringList("clean-list"));
   }
 
   private void loadConfig() {

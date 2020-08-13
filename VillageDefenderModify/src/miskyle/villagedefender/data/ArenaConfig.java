@@ -53,8 +53,10 @@ public class ArenaConfig {
           area.getWaves().put(waveEntry, waveC);
         }
         area.setFinalWave(config.getInt("final-wave",999));
+        area.setJoinMidway(config.getBoolean("join-midway", false));
         String id = config.getString("id");
         areas.put(id, area);
+        VillageDefender.getPlugin().getLogger().info("[miSkYle] => 成功加载 "+id+" 设定");
       }
     }
   }
