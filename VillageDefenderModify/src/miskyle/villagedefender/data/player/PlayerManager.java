@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import miskyle.villagedefender.data.ConfigManager;
+import miskyle.villagedefender.data.ReJoinSystem;
 import miskyle.villagedefender.data.kit.DIYKit;
 import pl.plajer.villagedefense.Main;
 import pl.plajer.villagedefense.api.event.game.VillageGameStartEvent;
@@ -46,6 +47,7 @@ public class PlayerManager implements Listener{
   @EventHandler
   public void playerJoin(PlayerJoinEvent e) {
     playerDatas.put(e.getPlayer().getName(), PlayerData.load(e.getPlayer().getName()));
+    ReJoinSystem.reJoin(e.getPlayer());
   }
   
   @EventHandler

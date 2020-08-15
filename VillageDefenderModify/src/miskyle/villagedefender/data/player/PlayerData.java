@@ -160,7 +160,7 @@ public class PlayerData {
   }
   
   private void changeTarget(Player p) {
-    p.getNearbyEntities(3, 3, 3).forEach(e -> {
+    p.getNearbyEntities(5, 5, 5).forEach(e -> {
       if (!VillageDefender.getMMApi().isMythicMob(e)) {
         return;
       }

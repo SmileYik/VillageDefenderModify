@@ -14,9 +14,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper;
 import miskyle.villagedefender.command.CommandManager;
-import miskyle.villagedefender.data.ArenaConfig;
 import miskyle.villagedefender.data.ConfigManager;
 import miskyle.villagedefender.data.area.AreaConfig;
+import miskyle.villagedefender.data.area.ArenaConfig;
 import miskyle.villagedefender.data.player.PlayerManager;
 import pl.plajer.villagedefense.Main;
 public class VillageDefender {

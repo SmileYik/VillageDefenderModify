@@ -33,6 +33,7 @@ import org.jetbrains.annotations.NotNull;
 
 import miskyle.villagedefender.VillageDefender;
 import miskyle.villagedefender.cleaner.MobCleaner;
+import miskyle.villagedefender.data.ReJoinSystem;
 import miskyle.villagedefender.data.area.AreaConfig;
 import miskyle.villagedefender.data.area.WaveConfig;
 import miskyle.villagedefender.data.player.PlayerData;
@@ -132,13 +133,16 @@ public class ArenaManager {
     arena.getScoreboardManager().createScoreboard(user);
     if ((arena.getArenaState() == ArenaState.IN_GAME || (arena.getArenaState() == ArenaState.STARTING && arena.getTimer() <= 3) || arena.getArenaState() == ArenaState.ENDING)) {
       //*** miSkYle ***
+      
       AreaConfig area = VillageDefender.getArea(arena.getId());
-      if (area != null && !area.isJoinMidway()) {
+      if (!ReJoinSystem.canJoin(player, arena.getId()) 
+          || (area != null && !area.isJoinMidway())) {
         player.sendMessage("§c§l不, 这张地图设定为不可中途加入, 你现在不能进去, 得等里面的人出来后才能进去.");
         arena.getPlayers().remove(player);
         arena.getScoreboardManager().removeScoreboard(user);
         return;
       }
+      ReJoinSystem.joinGame(player, arena.getId());
       //*** miSkYle ***
       if (!plugin.getConfigPreferences().getOption(ConfigPreferences.Option.INGAME_JOIN_RESPAWN)){
         user.setPermanentSpectator(true);
@@ -185,6 +189,10 @@ public class ArenaManager {
     if (plugin.getConfigPreferences().getOption(ConfigPreferences.Option.INVENTORY_MANAGER_ENABLED)) {
       InventorySerializer.saveInventoryToFile(plugin, player);
     }
+    
+  //*** miSkYle ***
+    ReJoinSystem.joinGame(player, arena.getId());
+  //*** miSkYle ***
     player.teleport(arena.getLobbyLocation());
     player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
     player.setFoodLevel(20);
@@ -271,6 +279,10 @@ public class ArenaManager {
     Debugger.debug(Level.INFO, "[{0}] Initial leave attempt of {1}", arena.getId(), player.getName());
     long start = System.currentTimeMillis();
 
+    // *** miSkYle ***
+    ReJoinSystem.leaveGame(player, arena.getId());
+    // *** miSkYle ***
+    
     //the default fly speed
     player.setFlySpeed(0.1f);
     player.setExp(0);
@@ -343,14 +355,17 @@ public class ArenaManager {
       PlayerData pd = PlayerManager.getPlayerData(player.getName());
       if (!quickStop) {
         spawnFireworks(arena, player);
+        // *** miSkYle ***
         if (pd != null) {
           pd.gameOver();
         }
+        // *** miSkYle ***
       } else {
+        // *** miSkYle ***
         if (pd != null) {
-          pd.gameOver();
+          pd.stopGame();
         }
-        pd.stopGame();
+        // *** miSkYle ***
       }
     }
     arena.getScoreboardManager().stopAllScoreboards();
@@ -360,6 +375,9 @@ public class ArenaManager {
     arena.setTimer(arena.getVillagers().isEmpty() ? 10 : 5);
     arena.getMapRestorerManager().fullyRestoreArena();
     arena.setArenaState(ArenaState.ENDING);
+    // *** miSkYle ***
+     ReJoinSystem.gameStop(arena.getId());
+    // *** miSkYle ***
     Debugger.debug(Level.INFO, "[{0}] Game stop event finished took {1}ms", arena.getId(), System.currentTimeMillis() - start);
   }
 
@@ -403,9 +421,12 @@ public class ArenaManager {
       stopGame(false, arena);
       return;
     }
+    
     // *** miSkYle ***
     MobCleaner.clear();
+    ArenaEvents.ironManKillZombie.clear();
     // *** miSkYle ***
+    
     plugin.getRewardsHandler().performReward(arena, Reward.RewardType.END_WAVE);
     arena.setTimer(plugin.getConfig().getInt("Cooldown-Before-Next-Wave", 25));
     arena.getZombieSpawnManager().getZombieCheckerLocations().clear();
@@ -424,7 +445,7 @@ public class ArenaManager {
     for (Player player : arena.getPlayers()) {
       player.sendMessage(plugin.getChatManager().getPrefix() + plugin.getChatManager().formatMessage(arena, plugin.getChatManager().colorMessage(Messages.NEXT_WAVE_IN), arena.getTimer()));
       player.sendMessage(plugin.getChatManager().getPrefix() + plugin.getChatManager().colorMessage(Messages.YOU_FEEL_REFRESHED));
-      player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+      //player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
       User user = plugin.getUserManager().getUser(player);
       user.addStat(StatsStorage.StatisticType.ORBS, arena.getWave() * 10);
     }

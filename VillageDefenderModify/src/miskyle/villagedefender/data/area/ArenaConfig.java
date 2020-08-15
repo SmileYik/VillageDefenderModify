@@ -1,4 +1,4 @@
-package miskyle.villagedefender.data;
+package miskyle.villagedefender.data.area;
 
 import java.io.File;
 import java.util.HashMap;
@@ -6,8 +6,6 @@ import java.util.HashMap;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import miskyle.villagedefender.VillageDefender;
-import miskyle.villagedefender.data.area.AreaConfig;
-import miskyle.villagedefender.data.area.WaveConfig;
 import miskyle.villagedefender.utils.SimpleEntry;
 
 public class ArenaConfig {

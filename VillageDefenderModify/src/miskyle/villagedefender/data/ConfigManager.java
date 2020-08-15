@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import com.github.miskyle.mcpt.mysql.MySQLManager;
 
 import miskyle.villagedefender.cleaner.MobCleaner;
+import miskyle.villagedefender.fix.DropNothingListener;
 import pl.plajer.villagedefense.Main;
 
 public class ConfigManager {
@@ -33,6 +34,7 @@ public class ConfigManager {
     loadLootGold();
     DIYKitManager.init(plugin);
     new MobCleaner(plugin, config.getStringList("clean-list"));
+    new DropNothingListener(plugin);
   }
 
   private void loadConfig() {

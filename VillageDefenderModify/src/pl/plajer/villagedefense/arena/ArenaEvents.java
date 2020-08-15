@@ -77,7 +77,7 @@ public class ArenaEvents implements Listener {
 
   private final Main plugin;
 
-  private static ArrayList<Integer> ironManKillZombie = new ArrayList<>();
+  public static ArrayList<Integer> ironManKillZombie = new ArrayList<>();
   
   public ArenaEvents(Main plugin) {
     this.plugin = plugin;
@@ -188,9 +188,7 @@ public class ArenaEvents implements Listener {
             ironManKillZombie.remove((Integer)e.getEntity().getEntityId());
             e.setDroppedExp(0);
             e.getDrops().clear();
-            return;
-          }
-          if (VillageDefender.getMMApi().isMythicMob(e.getEntity())) {
+          } else if (VillageDefender.getMMApi().isMythicMob(e.getEntity())) {
             double gold = ConfigManager.getLootGold(VillageDefender.getMMApi().getMythicMobInstance(e.getEntity()).getMobType());
             if (gold > 0) {
               arena.getPlayers().forEach(p -> {

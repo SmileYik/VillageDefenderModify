@@ -30,9 +30,9 @@ public class MobCleaner implements Listener {
     }
     if (mc != null) {
       HandlerList.unregisterAll(mc);
-      Bukkit.getPluginManager().registerEvents(this, plugin);
     }
     mc = this;
+    Bukkit.getPluginManager().registerEvents(this, plugin);
   }
   
   @EventHandler
