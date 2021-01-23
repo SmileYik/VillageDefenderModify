@@ -158,7 +158,7 @@ public class ZombieSpawnManager {
   private void spawnMMZombies(String name) {
     Location loc = arena.getZombieSpawns().get(random.nextInt(arena.getZombieSpawns().size()));
     try {
-      arena.getZombies().add((Zombie)VillageDefender.getMMApi().spawnMythicMob(name, loc, arena.getOption(ArenaOption.ZOMBIE_DIFFICULTY_MULTIPLIER)));
+      arena.getZombies().add((Zombie)VillageDefender.getMMApi().spawnMythicMob(name, loc, (int)(arena.getWave()/2D*(arena.getPlayers().size()/5+1))));
     } catch (InvalidMobTypeException e) {
       e.printStackTrace();
     }

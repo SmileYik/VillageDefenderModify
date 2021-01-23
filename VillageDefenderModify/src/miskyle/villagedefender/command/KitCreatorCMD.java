@@ -15,7 +15,7 @@ public class KitCreatorCMD {
     KitCreator.start(p);
   }
   @Cmd(subCmd = {"save"},
-      args = {""},
+      args = {""}, 
       des = "保存制造Kit",
       permission = "VillageDefemderMiSkYle.Admin")
   public void save(Player p, String[] args) {

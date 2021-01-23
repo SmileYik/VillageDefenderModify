@@ -39,6 +39,9 @@ public class KitListener implements Listener {
   
   //TODO 更多腐肉
 
+  
+  
+  
   // 禁止穿装备 开始
   @EventHandler
   public void onCloseInvToDropArmor(InventoryCloseEvent e) {
